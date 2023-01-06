@@ -154,7 +154,7 @@ export default class PortfolioForm extends Component {
             withCredentials: true
         })
             .then(response => {
-                this.props.handleSucessfulFormSubmission(response.data.portfolio_item);
+                this.props.handleSuccessfullFormSubmission(response.data.portfolio_item);
                 console.log('response', response);
 
                 this.setState({
