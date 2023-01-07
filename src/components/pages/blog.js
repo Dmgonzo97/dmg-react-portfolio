@@ -5,7 +5,6 @@ import axios from 'axios';
 import BlogItem from '../blog/blog-item';
 import BlogModal from '../modal/blog-modal';
 
-
 class Blog extends Component {
     constructor() {
         super();
@@ -15,9 +14,7 @@ class Blog extends Component {
             totalCount: 0,
             currentPage: 0,
             isLoading: true,
-            blogModalIsOpen: false,
-            apiUrl: "https://deiongonzalez.devcamp.space/portfolio/portfolio_blogs",
-            apiAction: "get"
+            blogModalIsOpen: false
         }
 
         this.getBlogItems = this.getBlogItems.bind(this);
@@ -30,7 +27,23 @@ class Blog extends Component {
     }
 
     handleDeleteClick(blog) {
-        console.log('deleted', blog);
+        axios
+            .delete(
+                `https://api.devcamp.space/portfolio/portfolio_blogs/${blog.id}`,
+                { withCredentials: true }
+            )
+            .then(response => {
+                this.setState({
+                    blogItems: this.state.blogItems.filter(blogItem => {
+                        return blog.id !== blogItem.id;
+                    })
+                });
+
+                return response.data;
+            })
+            .catch(error => {
+                console.log('error with deleted blog', error);
+            })
     }
 
     handleSuccessfulNewBlogSubmission(blog) {
@@ -72,23 +85,27 @@ class Blog extends Component {
             currentPage: this.state.currentPage + 1
         });
 
-        axios({
-            method: this.state.apiAction,
-            url: this.state.apiUrl + `?page=${this.state.currentPage}`,
-            withCredentials: true
-        }).then(response => {
-                console.log('getting', response.data);
+        axios
+            .get(
+                `https://deiongonzalez.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`,
+                {
+                    withCredentials: true
+                }
+            )
+            .then(response => {
+                console.log("gettting", response.data);
                 this.setState({
                     blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
                     totalCount: response.data.meta.total_records,
                     isLoading: false
                 });
-            }).catch(error => {
-                console.log('getBlogItems error', error);
             })
+            .catch(error => {
+                console.log("getBlogItems error", error);
+            });
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getBlogItems();
     }
 
@@ -101,8 +118,10 @@ class Blog extends Component {
             if (this.props.loggedInStatus === "LOGGED_IN") {
                 return (
                     <div key={blogItem.id} className="admin-blog-wrapper">
-                        <BlogItem  blogItem={blogItem} />
-                        <a onClick={() => this.handleDeleteClick(blogItem)}>Delete</a>
+                        <BlogItem blogItem={blogItem} />
+                        <a onClick={() => this.handleDeleteClick(blogItem)}>
+                            <FontAwesomeIcon icon='trash' />
+                        </a>
                     </div>
                 )
             } else {
