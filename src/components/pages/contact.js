@@ -23,7 +23,7 @@ export default function () {
             </div>
 
             <div className="text">
-              EMAIL
+              DMGONZALEZ1997@GMAIL.COM
             </div>
           </div>
 
@@ -33,7 +33,7 @@ export default function () {
             </div>
 
             <div className="text">
-              555-555-5555
+              469-849-2436
             </div>
           </div>
 
@@ -43,7 +43,7 @@ export default function () {
             </div>
 
             <div className="text">
-              LINKED IN (HYPERTEXT)
+              <a href="https://www.linkedin.com/in/deiongonzalez/">LinkedIn</a>
             </div>
           </div>
 
@@ -53,7 +53,7 @@ export default function () {
             </div>
 
             <div className="text">
-              LOCATION
+              Tampa, Florida
             </div>
           </div>
         </div>

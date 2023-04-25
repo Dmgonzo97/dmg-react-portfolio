@@ -12,10 +12,11 @@ export default function () {
       />
 
       <div className="right-column">
-        Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Sequi nobis facere, expedita eligendi nesciunt saepe eius.
-        Perspiciatis reiciendis repudiandae cum, minima,
-        nulla ullam vel repellat enim sed, eum harum labore.
+        Hello, my name is Deion, and I am an Full-Stack Developer with a love for teamwork and problem-solving.
+        <br />
+        During my time in the Marine Corps, I've learned the profound effect of teamwork and fortitude against problems and difficulties.
+        <br />
+        I have graduated from Bottega University with a certifcation in Full-Stack Development and aspiring to take my step into the industry!
       </div>
     </div>
   );
