@@ -61,7 +61,7 @@ export default class PortfolioManager extends Component {
 
   getPortfolioItems() {
     axios
-      .get("https://deiongonzalez.devcamp.space/portfolio/portfolio_items", {
+      .get("https://dmgonzo.devcamp.space/portfolio/portfolio_items", {
         withCredentials: true
       }).then(response => {
         this.setState({

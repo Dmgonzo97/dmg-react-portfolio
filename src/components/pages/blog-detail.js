@@ -43,7 +43,7 @@ export default class BlogDetail extends Component {
 
   getBlogItems() {
     axios
-      .get(`https://deiongonzalez.devcamp.space/portfolio/portfolio_blogs/${this.state.currentId}`
+      .get(`https://dmgonzo.devcamp.space/portfolio/portfolio_blogs/${this.state.currentId}`
       ).then(response => {
         this.setState({
           blogItem: response.data.portfolio_blog

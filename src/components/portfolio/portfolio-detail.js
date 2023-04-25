@@ -6,7 +6,7 @@ export default class PortfolioDetail extends Component {
     super(props);
 
     this.state = {
-      apiUrl: "https://deiongonzalez.devcamp.space/portfolio/portfolio_items",
+      apiUrl: "https://dmgonzo.devcamp.space/portfolio/portfolio_items",
       apiAction: "get",
       portfolioItem: {},
     }
