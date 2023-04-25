@@ -3,41 +3,41 @@ import loginImg from "../../../static/assets/images/auth/login.jpg"
 import Login from './login';
 
 export default class Auth extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.handleSucessfulAuth = this.handleSucessfulAuth.bind(this)
-        this.handleUnsucessfulAuth = this.handleUnsucessfulAuth.bind(this)
-    }
+    this.handleSucessfulAuth = this.handleSucessfulAuth.bind(this)
+    this.handleUnsucessfulAuth = this.handleUnsucessfulAuth.bind(this)
+  }
 
-    handleSucessfulAuth() {
-        this.props.handleSucessfulLogin();
-        this.props.history.push("/")
-    }
+  handleSucessfulAuth() {
+    this.props.handleSucessfulLogin();
+    this.props.history.push("/")
+  }
 
-    handleUnsucessfulAuth() {
-        this.props.handleSucessfulLogout()
-    }
+  handleUnsucessfulAuth() {
+    this.props.handleSucessfulLogout()
+  }
 
-    render() {
-        return (
-            <div className='auth-page-wrapper'>
-                <div
-                    className='left-column'
-                    style={{
-                        backgroundImage: `url(${loginImg})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center"
-                    }}
-                />
+  render() {
+    return (
+      <div className='auth-page-wrapper'>
+        <div
+          className='left-column'
+          style={{
+            backgroundImage: `url(${loginImg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }}
+        />
 
-                <div className='right-column'>
-                    <Login
-                        handleSucessfulAuth={this.handleSucessfulAuth}
-                        handleUnsucessfulAuth={this.handleUnsucessfulAuth}
-                    />
-                </div>
-            </div>
-        );
-    }
+        <div className='right-column'>
+          <Login
+            handleSucessfulAuth={this.handleSucessfulAuth}
+            handleUnsucessfulAuth={this.handleUnsucessfulAuth}
+          />
+        </div>
+      </div>
+    );
+  }
 }

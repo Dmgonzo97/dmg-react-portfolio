@@ -5,72 +5,72 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
 export default class RichTextEditor extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            editorState: EditorState.createEmpty()
-        };
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
 
-        this.onEditorStateChange = this.onEditorStateChange.bind(this);
-        this.uploadFile = this.uploadFile.bind(this);
-        this.getBase64 = this.getBase64.bind(this);
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.uploadFile = this.uploadFile.bind(this);
+    this.getBase64 = this.getBase64.bind(this);
+  }
+
+  getBase64(file, callback) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => callback(reader.result);
+    reader.onerror = () => { };
+  }
+
+  uploadFile(file) {
+    return new Promise((resolve, reject) => {
+      this.getBase64(file, data => resolve({ data: { link: data } }));
+    });
+  }
+
+  componentWillMount() {
+    if (this.props.editMode && this.props.contentToEdit) {
+      const blocksFromHtml = htmlToDraft(this.props.contentToEdit);
+      const { contentBlocks, entityMap } = blocksFromHtml;
+      const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+      const editorState = EditorState.createWithContent(contentState);
+      this.setState({ editorState });
     }
+  }
 
-    getBase64(file, callback) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => callback(reader.result);
-        reader.onerror = () => {};
-    }
+  onEditorStateChange(editorState) {
+    this.setState(
+      { editorState },
+      this.props.handleRichTextEditorChange(
+        draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+      )
+    );
+  }
 
-    uploadFile(file) {
-        return new Promise((resolve, reject) => {
-            this.getBase64(file, data => resolve({ data: { link: data } }));
-        });
-    }
-
-    componentWillMount() {
-        if (this.props.editMode && this.props.contentToEdit) {
-            const blocksFromHtml = htmlToDraft(this.props.contentToEdit);
-            const { contentBlocks, entityMap } = blocksFromHtml;
-            const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-            const editorState = EditorState.createWithContent(contentState);
-            this.setState({ editorState });
-        }
-    }
-
-    onEditorStateChange(editorState) {
-        this.setState(
-            { editorState },
-            this.props.handleRichTextEditorChange(
-                draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
-            )
-        );
-    }
-
-    render() {
-        return (
-            <div>
-                <Editor
-                    editorState={this.state.editorState}
-                    wrapperClassName="demo-wrapper"
-                    editorClassname='demo-editor'
-                    onEditorStateChange={this.onEditorStateChange}
-                    toolbar={{
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        textAlign: { inDropdown: true },
-                        history: { inDropdown: true },
-                        image: {
-                            uploadCallback: this.uploadFile,
-                            alt: { present: true, mandatory: false },
-                            previewImage: true,
-                            inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg"
-                        }
-                    }}
-                />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Editor
+          editorState={this.state.editorState}
+          wrapperClassName="demo-wrapper"
+          editorClassname='demo-editor'
+          onEditorStateChange={this.onEditorStateChange}
+          toolbar={{
+            inline: { inDropdown: true },
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            history: { inDropdown: true },
+            image: {
+              uploadCallback: this.uploadFile,
+              alt: { present: true, mandatory: false },
+              previewImage: true,
+              inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg"
+            }
+          }}
+        />
+      </div>
+    );
+  }
 }
